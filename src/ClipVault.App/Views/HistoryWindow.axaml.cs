@@ -20,6 +20,9 @@ public partial class HistoryWindow : Window
         _search = this.FindControl<TextBox>("Search")!;
         _list.ItemsSource = _vm.Items;
 
+        var status = this.FindControl<TextBlock>("StatusText");
+        if (status is not null) status.Text = "◉ sync on";
+
         _search.KeyUp += async (_, _) => await _vm.LoadAsync(_search.Text);
         _list.DoubleTapped += (_, _) => PasteSelected();
         KeyDown += OnKeyDown;

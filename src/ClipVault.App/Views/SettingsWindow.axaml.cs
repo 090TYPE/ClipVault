@@ -1,6 +1,8 @@
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ClipVault.App.ViewModels;
+using ClipVault.App.Themes;
 
 namespace ClipVault.App.Views;
 
@@ -29,6 +31,20 @@ public partial class SettingsWindow : Window
             _vm.Settings.MaxAgeDays = (int)(maxAge.Value ?? 30);
             _vm.Save();
             Close();
+        };
+
+        var themeBox = this.FindControl<ComboBox>("ThemeBox")!;
+        themeBox.ItemsSource = ThemeManager.Themes;
+        themeBox.SelectedItem = ThemeManager.Themes.Contains(_vm.Settings.Theme)
+            ? _vm.Settings.Theme : "Neon";
+        themeBox.SelectionChanged += (_, _) =>
+        {
+            if (themeBox.SelectedItem is string t)
+            {
+                ThemeManager.Apply(t);     // live recolor
+                _vm.Settings.Theme = t;
+                _vm.Save();
+            }
         };
 
         WireSync();

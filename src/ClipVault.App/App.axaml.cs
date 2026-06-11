@@ -21,6 +21,7 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown; // tray app, no main window
 
+        ClipVault.App.Themes.ThemeManager.Apply(Services.Settings.Theme);
         Services.Start(onHotkey: ShowHistory);
         base.OnFrameworkInitializationCompleted();
     }

@@ -5,6 +5,8 @@
         WindowStartupLocation="CenterScreen">
   <ScrollViewer>
     <StackPanel Margin="16" Spacing="10">
+      <TextBlock Text="Theme"/>
+      <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch"/>
       <TextBlock Text="Hotkey (e.g. Ctrl+Shift+V)"/>
       <TextBox x:Name="Hotkey"/>
       <TextBlock Text="Max unpinned items"/>

@@ -2,24 +2,62 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:models="using:ClipVault.Core.Models"
         x:Class="ClipVault.App.Views.HistoryWindow"
-        Width="480" Height="560" WindowStartupLocation="CenterScreen"
-        Title="ClipVault" ShowInTaskbar="False">
-  <DockPanel Margin="8">
-    <TextBox x:Name="Search" DockPanel.Dock="Top" PlaceholderText="Search…"/>
-    <TextBlock DockPanel.Dock="Bottom" Margin="2,6,2,0" Opacity="0.6"
-               Text="Enter: paste   Ctrl+P: pin   Del: delete   Esc: close"/>
-    <ListBox x:Name="List" Margin="0,8,0,0">
+        Width="500" Height="600" WindowStartupLocation="CenterScreen"
+        Title="ClipVault" ShowInTaskbar="False"
+        Background="{DynamicResource Cv.Background}">
+  <DockPanel>
+    <!-- header -->
+    <Border DockPanel.Dock="Top" Background="{DynamicResource Cv.SurfaceAlt}"
+            BorderBrush="{DynamicResource Cv.Border}" BorderThickness="0,0,0,1" Padding="16,12">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Text="▍CLIPVAULT" FontWeight="SemiBold" FontSize="14"
+                   Foreground="{DynamicResource Cv.Accent}"/>
+        <TextBlock Grid.Column="1" x:Name="StatusText" FontSize="11"
+                   VerticalAlignment="Center" Foreground="{DynamicResource Cv.Accent}"/>
+      </Grid>
+    </Border>
+
+    <!-- footer hints -->
+    <Border DockPanel.Dock="Bottom" Background="{DynamicResource Cv.SurfaceAlt}"
+            BorderBrush="{DynamicResource Cv.Border}" BorderThickness="0,1,0,0" Padding="16,8">
+      <TextBlock FontSize="11" Foreground="{DynamicResource Cv.TextDim}"
+                 Text="↵ paste    ^P pin    Del remove    Esc close"/>
+    </Border>
+
+    <!-- search -->
+    <Border DockPanel.Dock="Top" Padding="12,12,12,6">
+      <TextBox x:Name="Search" PlaceholderText="Search…"
+               Background="{DynamicResource Cv.Surface}"
+               Foreground="{DynamicResource Cv.Text}"
+               BorderBrush="{DynamicResource Cv.Border}"
+               CornerRadius="6"/>
+    </Border>
+
+    <!-- list -->
+    <ListBox x:Name="List" Margin="6,0,6,6" Background="Transparent"
+             BorderThickness="0">
       <ListBox.ItemTemplate>
         <DataTemplate x:DataType="models:ClipItem">
-          <StackPanel Orientation="Horizontal" Spacing="6">
-            <TextBlock Text="📌" IsVisible="{Binding IsPinned}" VerticalAlignment="Center"/>
-            <Image MaxWidth="64" MaxHeight="64" Stretch="Uniform"
-                   Source="{Binding BlobPath, Converter={StaticResource PathToThumbnail}}"
-                   IsVisible="{Binding Type, Converter={StaticResource EnumEquals}, ConverterParameter=Image}"/>
-            <TextBlock Text="{Binding Preview}" TextTrimming="CharacterEllipsis"
-                       VerticalAlignment="Center"
-                       IsVisible="{Binding Type, Converter={StaticResource EnumNotEquals}, ConverterParameter=Image}"/>
-          </StackPanel>
+          <Border Background="{DynamicResource Cv.Surface}"
+                  BorderBrush="{DynamicResource Cv.Border}" BorderThickness="1"
+                  CornerRadius="6" Padding="10" Margin="0,3">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+              <TextBlock Grid.Column="0" Text="★" Margin="0,0,8,0"
+                         VerticalAlignment="Center"
+                         Foreground="{DynamicResource Cv.Pinned}"
+                         IsVisible="{Binding IsPinned}"/>
+              <Image Grid.Column="1" MaxWidth="40" MaxHeight="40" Stretch="Uniform"
+                     Margin="0,0,8,0"
+                     Source="{Binding BlobPath, Converter={StaticResource PathToThumbnail}}"
+                     IsVisible="{Binding Type, Converter={StaticResource EnumEquals}, ConverterParameter=Image}"/>
+              <TextBlock Grid.Column="2" Text="{Binding Preview}"
+                         TextTrimming="CharacterEllipsis" VerticalAlignment="Center"
+                         Foreground="{DynamicResource Cv.Text}"/>
+              <TextBlock Grid.Column="3" Text="{Binding Type}" FontSize="10"
+                         VerticalAlignment="Center" Margin="8,0,0,0"
+                         Foreground="{DynamicResource Cv.TextDim}"/>
+            </Grid>
+          </Border>
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
