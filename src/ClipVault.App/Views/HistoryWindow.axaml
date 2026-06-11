@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="using:ClipVault.Core.Models"
+        x:Class="ClipVault.App.Views.HistoryWindow"
+        Width="480" Height="560" WindowStartupLocation="CenterScreen"
+        Title="ClipVault" ShowInTaskbar="False">
+  <DockPanel Margin="8">
+    <TextBox x:Name="Search" DockPanel.Dock="Top" PlaceholderText="Search…"/>
+    <TextBlock DockPanel.Dock="Bottom" Margin="2,6,2,0" Opacity="0.6"
+               Text="Enter: paste   Ctrl+P: pin   Del: delete   Esc: close"/>
+    <ListBox x:Name="List" Margin="0,8,0,0">
+      <ListBox.ItemTemplate>
+        <DataTemplate x:DataType="models:ClipItem">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <TextBlock Text="📌" IsVisible="{Binding IsPinned}"/>
+            <TextBlock Text="{Binding Preview}" TextTrimming="CharacterEllipsis"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</Window>

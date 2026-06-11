@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Include="Assets/**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ClipVault.Core\ClipVault.Core.csproj" />
     <ProjectReference Include="..\ClipVault.Platform\ClipVault.Platform.csproj" />
   </ItemGroup>
