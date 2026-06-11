@@ -14,9 +14,11 @@ nothing leaves your machine.
 - 🔍 Instant search over history
 - 📌 Pin frequently used items so they never expire
 - 🧹 Automatic dedup and retention (keep last N items / N days)
+- 🖼️ Image clips shown as thumbnails right in the history list
+- 🎨 Three themes — Neon (default), Dark, Light — switchable live in Settings
 - 🔒 100% local — SQLite database in your user profile
 
-## Platform support (MVP)
+## Platform support
 
 | OS | Text | Images | Files |
 |----|------|--------|-------|
@@ -53,7 +55,20 @@ or the global hotkey.
 - Type to **search**, arrow keys to navigate.
 - **Enter** pastes the selected item back to the clipboard (then paste with Ctrl+V).
 - **Ctrl+P** pins/unpins, **Del** deletes, **Esc** closes.
+- Image clips appear as thumbnails in the list.
 - Change the hotkey and retention in **tray → Settings** (restart to apply).
+
+## Themes
+
+ClipVault ships three themes, selectable in **tray → Settings → Theme**:
+
+- **Neon** (default) — black background, neon-green accent, monospace terminal look.
+- **Dark** — calm dark grey with a teal accent.
+- **Light** — clean white with an indigo accent.
+
+The theme applies **instantly** (no restart) and is remembered across launches.
+Palettes live in `src/ClipVault.App/Themes/ThemeManager.cs` (eight colors each) if
+you want to tweak them.
 
 ## Sync (LAN)
 
