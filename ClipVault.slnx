@@ -3,6 +3,7 @@
     <Project Path="src/ClipVault.App/ClipVault.App.csproj" />
     <Project Path="src/ClipVault.Core/ClipVault.Core.csproj" />
     <Project Path="src/ClipVault.Platform/ClipVault.Platform.csproj" />
+    <Project Path="src/ClipVault.Sync/ClipVault.Sync.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/ClipVault.Core.Tests/ClipVault.Core.Tests.csproj" />
