@@ -36,7 +36,7 @@ public class AppServices
 
         var identity = DeviceIdentity.LoadOrCreate(Path.Combine(AppPaths.DataDir, "device.json"));
         var trust = new TrustStore(Path.Combine(AppPaths.DataDir, "trust.json"));
-        Sync = new SyncService(identity, trust);
+        Sync = new SyncService(identity, trust, AppPaths.BlobDir);
     }
 
     public void Start(Action onHotkey)

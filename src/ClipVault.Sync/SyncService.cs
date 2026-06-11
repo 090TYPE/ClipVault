@@ -18,6 +18,7 @@ public class SyncService : ISyncService
 {
     private readonly DeviceIdentity _identity;
     private readonly TrustStore _trust;
+    private readonly string _blobDir;
     private readonly TcpListener _listener;
     private UdpDiscovery? _discovery;
     private CancellationTokenSource? _cts;
@@ -28,10 +29,12 @@ public class SyncService : ISyncService
 
     public event Action<ClipItem>? RemoteClipReceived;
 
-    public SyncService(DeviceIdentity identity, TrustStore trust)
+    public SyncService(DeviceIdentity identity, TrustStore trust, string blobDir)
     {
         _identity = identity;
         _trust = trust;
+        _blobDir = blobDir;
+        Directory.CreateDirectory(_blobDir);
         _listener = new TcpListener(IPAddress.Any, 0);
         _listener.Start();
     }
@@ -104,7 +107,20 @@ public class SyncService : ISyncService
                 var plain = new SecureChannel(Convert.FromBase64String(dev.KeyBase64)).Decrypt(body);
                 var msg = SyncMessage.FromBytes(plain);
                 if (msg.Type == "clip" && msg.Item is not null)
-                    RemoteClipReceived?.Invoke(msg.Item);
+                {
+                    var item = msg.Item;
+                    if (item.Type == ClipType.Image && msg.ImageBytes is not null)
+                    {
+                        try
+                        {
+                            var local = Path.Combine(_blobDir, $"{Guid.NewGuid():N}.png");
+                            File.WriteAllBytes(local, msg.ImageBytes);
+                            item.BlobPath = local;
+                        }
+                        catch { /* deliver without local blob */ }
+                    }
+                    RemoteClipReceived?.Invoke(item);
+                }
                 return; // decrypted with this peer's key
             }
             catch { /* not this key — try next */ }
@@ -140,7 +156,12 @@ public class SyncService : ISyncService
 
     public async Task BroadcastAsync(ClipItem item)
     {
-        var msgBytes = SyncMessage.ForClip(item).ToBytes();
+        byte[]? imageBytes = null;
+        if (item.Type == ClipType.Image && item.BlobPath is not null && File.Exists(item.BlobPath))
+        {
+            try { imageBytes = File.ReadAllBytes(item.BlobPath); } catch { /* send without image */ }
+        }
+        var msgBytes = SyncMessage.ForClip(item, imageBytes).ToBytes();
         foreach (var dev in _trust.All)
         {
             var peer = DiscoveredPeers.FirstOrDefault(p => p.DeviceId == dev.DeviceId);
