@@ -21,10 +21,11 @@ nothing leaves your machine.
 | OS | Text | Images | Files |
 |----|------|--------|-------|
 | Windows | ✅ | ✅ | ✅ (pastes as paths) |
-| Linux | ✅ | ⏳ | ⏳ |
-| macOS | ✅ | ⏳ | ⏳ |
+| Linux | ✅ | ✅ | ✅ (pastes as paths) |
+| macOS | ✅ | ✅ | ✅ (pastes as paths) |
 
-Image/file capture on Linux and macOS is a planned follow-up.
+Copied files are captured and shown in history; pasting a file item puts its
+path(s) back as text (consistent across all platforms).
 
 ## Requirements
 
