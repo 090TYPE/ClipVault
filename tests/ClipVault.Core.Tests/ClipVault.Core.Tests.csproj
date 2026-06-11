@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ClipVault.Core\ClipVault.Core.csproj" />
     <ProjectReference Include="..\..\src\ClipVault.Sync\ClipVault.Sync.csproj" />
+    <ProjectReference Include="..\..\src\ClipVault.Platform\ClipVault.Platform.csproj" />
   </ItemGroup>
 
 </Project>
