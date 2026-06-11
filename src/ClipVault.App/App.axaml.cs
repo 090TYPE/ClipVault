@@ -40,7 +40,7 @@ public partial class App : Application
     private void OnOpenSettings(object? sender, System.EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
-            new SettingsWindow(new SettingsViewModel(Services.Settings)).Show());
+            new SettingsWindow(new SettingsViewModel(Services.Settings, Services.Sync)).Show());
     }
 
     private void OnQuit(object? sender, System.EventArgs e) =>

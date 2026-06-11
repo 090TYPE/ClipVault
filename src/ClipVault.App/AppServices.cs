@@ -1,9 +1,11 @@
 using System;
+using System.IO;
 using ClipVault.Core.Abstractions;
 using ClipVault.Core.Models;
 using ClipVault.Core.Paths;
 using ClipVault.Core.Storage;
 using ClipVault.Platform;
+using ClipVault.Sync;
 
 namespace ClipVault.App;
 
@@ -16,6 +18,7 @@ public class AppServices
     public IClipboardWriter Writer { get; }
     public IGlobalHotkeyService Hotkeys { get; }
     public ClipItemFactory Factory { get; }
+    public ISyncService Sync { get; }
 
     public bool HotkeyRegistered { get; private set; }
 
@@ -30,21 +33,34 @@ public class AppServices
         Factory = new ClipItemFactory(AppPaths.BlobDir);
         (Monitor, Writer) = PlatformFactory.CreateClipboard();
         Hotkeys = PlatformFactory.CreateHotkeys();
+
+        var identity = DeviceIdentity.LoadOrCreate(Path.Combine(AppPaths.DataDir, "device.json"));
+        var trust = new TrustStore(Path.Combine(AppPaths.DataDir, "trust.json"));
+        Sync = new SyncService(identity, trust);
     }
 
     public void Start(Action onHotkey)
     {
+        // Local capture → store → push to trusted peers.
         Monitor.ClipboardChanged += async r =>
         {
             try
             {
                 var item = Factory.Create(r);
-                await Store.AddAsync(item);
+                var stored = await Store.AddAsync(item);
                 await Store.ApplyRetentionAsync();
+                await Sync.BroadcastAsync(stored);
             }
             catch { /* never let a capture crash the listener */ }
         };
         Monitor.Start();
+
+        // Remote item → store. Hash dedup in the store prevents echo loops.
+        Sync.RemoteClipReceived += async item =>
+        {
+            try { await Store.AddAsync(item); } catch { /* ignore bad remote item */ }
+        };
+        Sync.Start();
 
         HotkeyRegistered = Hotkeys.Register(Settings.Hotkey, onHotkey);
         if (!HotkeyRegistered)

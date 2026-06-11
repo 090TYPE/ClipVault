@@ -1,17 +1,32 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="ClipVault.App.Views.SettingsWindow"
-        Width="380" Height="260" Title="ClipVault Settings"
+        Width="400" Height="560" Title="ClipVault Settings"
         WindowStartupLocation="CenterScreen">
-  <StackPanel Margin="16" Spacing="10">
-    <TextBlock Text="Hotkey (e.g. Ctrl+Shift+V)"/>
-    <TextBox x:Name="Hotkey"/>
-    <TextBlock Text="Max unpinned items"/>
-    <NumericUpDown x:Name="MaxUnpinned" Minimum="10" Maximum="5000" Increment="10"/>
-    <TextBlock Text="Max age (days)"/>
-    <NumericUpDown x:Name="MaxAge" Minimum="1" Maximum="3650" Increment="1"/>
-    <TextBlock Text="Restart required for changes to take effect."
-               Opacity="0.6" FontSize="11"/>
-    <Button x:Name="SaveBtn" Content="Save" HorizontalAlignment="Right"/>
-  </StackPanel>
+  <ScrollViewer>
+    <StackPanel Margin="16" Spacing="10">
+      <TextBlock Text="Hotkey (e.g. Ctrl+Shift+V)"/>
+      <TextBox x:Name="Hotkey"/>
+      <TextBlock Text="Max unpinned items"/>
+      <NumericUpDown x:Name="MaxUnpinned" Minimum="10" Maximum="5000" Increment="10"/>
+      <TextBlock Text="Max age (days)"/>
+      <NumericUpDown x:Name="MaxAge" Minimum="1" Maximum="3650" Increment="1"/>
+      <TextBlock Text="Restart required for hotkey/retention changes."
+                 Opacity="0.6" FontSize="11"/>
+      <Button x:Name="SaveBtn" Content="Save" HorizontalAlignment="Right"/>
+
+      <Separator Margin="0,8"/>
+      <TextBlock Text="Sync devices (same LAN)" FontWeight="Bold"/>
+      <ListBox x:Name="Devices" Height="120"/>
+      <StackPanel Orientation="Horizontal" Spacing="6">
+        <Button x:Name="ShowPinBtn" Content="Show PIN (pair this device)"/>
+        <TextBlock x:Name="PinLabel" VerticalAlignment="Center"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" Spacing="6">
+        <TextBox x:Name="PinEntry" Width="100" PlaceholderText="PIN"/>
+        <Button x:Name="PairBtn" Content="Pair with selected"/>
+        <TextBlock x:Name="PairStatus" VerticalAlignment="Center"/>
+      </StackPanel>
+    </StackPanel>
+  </ScrollViewer>
 </Window>
