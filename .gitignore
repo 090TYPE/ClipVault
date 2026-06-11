@@ -2,3 +2,6 @@ bin/
 obj/
 *.user
 .vs/
+
+# brainstorm visual companion
+.superpowers/
