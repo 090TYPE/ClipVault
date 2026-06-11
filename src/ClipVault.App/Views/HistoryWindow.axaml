@@ -12,8 +12,13 @@
       <ListBox.ItemTemplate>
         <DataTemplate x:DataType="models:ClipItem">
           <StackPanel Orientation="Horizontal" Spacing="6">
-            <TextBlock Text="📌" IsVisible="{Binding IsPinned}"/>
-            <TextBlock Text="{Binding Preview}" TextTrimming="CharacterEllipsis"/>
+            <TextBlock Text="📌" IsVisible="{Binding IsPinned}" VerticalAlignment="Center"/>
+            <Image MaxWidth="64" MaxHeight="64" Stretch="Uniform"
+                   Source="{Binding BlobPath, Converter={StaticResource PathToThumbnail}}"
+                   IsVisible="{Binding Type, Converter={StaticResource EnumEquals}, ConverterParameter=Image}"/>
+            <TextBlock Text="{Binding Preview}" TextTrimming="CharacterEllipsis"
+                       VerticalAlignment="Center"
+                       IsVisible="{Binding Type, Converter={StaticResource EnumNotEquals}, ConverterParameter=Image}"/>
           </StackPanel>
         </DataTemplate>
       </ListBox.ItemTemplate>

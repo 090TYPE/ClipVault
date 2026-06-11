@@ -1,7 +1,14 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="using:ClipVault.App.Converters"
              x:Class="ClipVault.App.App"
              RequestedThemeVariant="Default">
+
+    <Application.Resources>
+        <conv:PathToThumbnailConverter x:Key="PathToThumbnail"/>
+        <conv:EnumEqualsConverter x:Key="EnumEquals"/>
+        <conv:EnumEqualsConverter x:Key="EnumNotEquals" Invert="True"/>
+    </Application.Resources>
 
     <Application.Styles>
         <FluentTheme />
