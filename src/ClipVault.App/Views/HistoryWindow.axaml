@@ -4,6 +4,7 @@
         x:Class="ClipVault.App.Views.HistoryWindow"
         Width="500" Height="600" WindowStartupLocation="CenterScreen"
         Title="ClipVault" ShowInTaskbar="False"
+        Icon="/Assets/app.ico"
         Background="{DynamicResource Cv.Background}">
   <DockPanel>
     <!-- header -->
