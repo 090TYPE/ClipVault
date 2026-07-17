@@ -10,6 +10,14 @@ nothing leaves your machine.
 
 > Built on Avalonia / .NET. Optional LAN sync between your own devices is built in (encrypted, paired by PIN).
 
+## Screenshot
+
+<p align="center">
+  <img src="screenshots/history.png" width="420" alt="ClipVault history window — searchable clipboard history with pinned items, source app and keyboard shortcuts"/>
+</p>
+
+<p align="center"><sub>History window (Neon theme) — search, pin, and paste from history. Content shown is synthetic demo data.</sub></p>
+
 ## Features
 
 - 📋 Background capture of clipboard history (text, images, files)
