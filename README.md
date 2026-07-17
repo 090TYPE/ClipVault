@@ -1,5 +1,8 @@
 # ClipVault
 
+[![CI](https://github.com/090TYPE/ClipVault/actions/workflows/ci.yml/badge.svg)](https://github.com/090TYPE/ClipVault/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A cross-platform clipboard manager for **Windows, Linux, and macOS**. Runs in the
 system tray, records everything you copy (text, images, files), and gives fast
 keyboard-driven access to your clipboard history. Local-first and privacy-first —
